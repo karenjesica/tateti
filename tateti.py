@@ -37,8 +37,22 @@ def mostrar_tablero(primera_vez, pers, tablero):
         print('1-        ' + tablero[0] + '           | 2-           ' + tablero[1] + '             | 3-           ' + tablero[2])
         print(linea_vertical)
         print(linea_vertical)
+
+        elegir_opcion(pers)
+        
     except Exception as e:
         print(e)
+
+def elegir_opcion(pers):
+    try:
+        if pers:    
+            response = print("turno de persona")
+        else:
+            response = print("turno de maquina")
+        return response
+    except Exception as e:
+        print(e)
+
 
 if __name__ == "__main__":
     comenzar_partida()
