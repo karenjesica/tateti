@@ -11,6 +11,12 @@ def comenzar_partida():
         print(e)
 
 def quien_comienza():
+    """Elije a un jugador aleatoriamente (persona o computadora) para que
+    comience a jugar y le asigna True.
+
+    Devuelve:
+    pers(bool): true(comienza la persona) - false(comienza la computadora)
+    """
     try:
         
         if random.randint(0, 1) == 0:
@@ -45,6 +51,16 @@ def mostrar_tablero(primera_vez, pers, tablero):
         print(e)
 
 def elegir_opcion(tablero, pers, primera_vez):
+    """Selecciona al jugador segun su turno.
+
+    Parametros:
+    tablero(list): posicion del tablero.
+    pers(bool): true(juega la persona) - false(juega la maquina)
+    primera_vez(bool): true(tablero vacio)
+
+    Devuelve:
+    response(int): nro de jugada
+    """
     try:
         if pers:    
             response = print("turno de persona")
@@ -60,6 +76,13 @@ def elegir_opcion(tablero, pers, primera_vez):
         print(e)
 
 def turno_jugador(tablero):
+    """ El jugador elije un numero del 1 al 10
+    
+    Parametro: 
+    tablero(list): posicion del tablero.
+
+    Devuelve: nro(1 al 10)
+    """
     jugada = input('Elegir numero (1 a 9): ')
             
     invalido = posicion_invalida(jugada)
@@ -72,6 +95,13 @@ def turno_jugador(tablero):
     return jugada
 
 def turno_maquina(tablero):
+    """ La computadora elije un numero random
+    
+    Parametro: 
+    tablero(list): posicion del tablero.
+
+    Devuelve: nro(1 al 10)
+    """
     response = randrange(10)
     while tablero[int(response)-1] != " ":
         response = randrange(10)
@@ -101,6 +131,13 @@ def nueva_jugada(jugada, tablero, pers, primera_vez):
         print(e)
 
 def posicion_invalida(jugada):
+    """ Verifica que los numeros ingresados sean solo del 1 al 9
+    
+    Parametro: 
+    jugada(int): numero ingresado.
+
+    Devuelve: response(bool): true(nro del 1-9) - false(nro invalido) 
+    """
     try:
         posiciones = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
         if jugada not in posiciones:
