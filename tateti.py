@@ -39,32 +39,77 @@ def mostrar_tablero(primera_vez, pers, tablero):
         print(linea_vertical)
         print(linea_vertical)
 
-        elegir_opcion(tablero, pers)
+        elegir_opcion(tablero, pers, primera_vez)
         
     except Exception as e:
         print(e)
 
-def elegir_opcion(tablero, pers):
+def elegir_opcion(tablero, pers, primera_vez):
     try:
         if pers:    
             response = print("turno de persona")
             jugada = turno_jugador(tablero)
             response = jugada
         else:
-            response = print("turno de maquina")
+            response = turno_maquina(tablero)
+
+        nueva_jugada(response, tablero, pers, primera_vez)
+
         return response
     except Exception as e:
         print(e)
 
 def turno_jugador(tablero):
     jugada = input('Elegir numero (1 a 9): ')
+            
+    invalido = posicion_invalida(jugada)
+    if not invalido:
+        jugada = input('Elegir un numero entre 1 y 9: ')
+
+    while not jugada or tablero[int(jugada)-1] != " ":
+        jugada = input('Debe elegir un numero sin ocupar(1 a 9): ')
 
     return jugada
 
 def turno_maquina(tablero):
     response = randrange(10)
+    while tablero[int(response)-1] != " ":
+        response = randrange(10)
     
     return response
+
+def nueva_jugada(jugada, tablero, pers, primera_vez):
+    try:
+        if primera_vez:
+            tablero = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+            primera_vez = False
+        
+        if pers:
+            jugador = "X"
+        else:
+            jugador = "O"
+
+        tablero[int(jugada)-1] = jugador
+        
+        if not primera_vez:
+            if pers:
+                pers = False
+            else: 
+                pers = True
+
+    except Exception as e:
+        print(e)
+
+def posicion_invalida(jugada):
+    try:
+        posiciones = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
+        if jugada not in posiciones:
+            response = False
+        else:
+            response = True
+        return response 
+    except Exception as e:
+        print(e)
 
 if __name__ == "__main__":
     comenzar_partida()
