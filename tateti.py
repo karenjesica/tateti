@@ -1,4 +1,5 @@
 import random
+from random import randrange
 
 def comenzar_partida():
     try:
@@ -38,21 +39,32 @@ def mostrar_tablero(primera_vez, pers, tablero):
         print(linea_vertical)
         print(linea_vertical)
 
-        elegir_opcion(pers)
+        elegir_opcion(tablero, pers)
         
     except Exception as e:
         print(e)
 
-def elegir_opcion(pers):
+def elegir_opcion(tablero, pers):
     try:
         if pers:    
             response = print("turno de persona")
+            jugada = turno_jugador(tablero)
+            response = jugada
         else:
             response = print("turno de maquina")
         return response
     except Exception as e:
         print(e)
 
+def turno_jugador(tablero):
+    jugada = input('Elegir numero (1 a 9): ')
+
+    return jugada
+
+def turno_maquina(tablero):
+    response = randrange(10)
+    
+    return response
 
 if __name__ == "__main__":
     comenzar_partida()
