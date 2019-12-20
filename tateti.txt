@@ -1,0 +1,7 @@
+Requerimientos necesarios:
+
+- Python
+
+- Pytest
+
+- Utilizar la terminal de Python y correr el archivo tateti.py
