@@ -21,3 +21,12 @@ def test_posicion_invalida_letras():
 
 def test_posicion_invalida_caracteres_especiales(): 
     assert tateti.posicion_invalida("%?") is False
+
+def test_tablero_lleno():
+    assert tateti.tablero_lleno([""]) is not None
+
+def test_tablero_lleno_type():
+    assert type(tateti.tablero_lleno([""])) is bool
+
+def test_tablero_lleno_ocupado():
+    assert tateti.tablero_lleno(["5"]) is True

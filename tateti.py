@@ -27,7 +27,7 @@ def quien_comienza():
         return pers
     except Exception as e:
         print(e)
-
+        
 def mostrar_tablero(primera_vez, pers, tablero):
     try:
         linea_vertical = "                      |                            |"
@@ -46,32 +46,33 @@ def mostrar_tablero(primera_vez, pers, tablero):
         print(linea_vertical)
 
         elegir_opcion(tablero, pers, primera_vez)
-        
     except Exception as e:
         print(e)
 
 def elegir_opcion(tablero, pers, primera_vez):
-    """Selecciona al jugador segun su turno.
-
-    Parametros:
-    tablero(list): posicion del tablero.
-    pers(bool): true(juega la persona) - false(juega la maquina)
-    primera_vez(bool): true(tablero vacio)
-
-    Devuelve:
-    response(int): nro de jugada
-    """
     try:
+        """Selecciona al jugador segun su turno.
+
+        Parametros:
+        tablero(list): posicion del tablero.
+        pers(bool): true(juega la persona) - false(juega la maquina)
+        primera_vez(bool): true(tablero vacio)
+
+        Devuelve:
+        response(int): nro de jugada
+        """
         if pers:    
-            response = print("turno de persona")
+            print("turno de persona")
+
             jugada = turno_jugador(tablero)
             response = jugada
+        
         else:
+            print("turno de maquina")
+
             response = turno_maquina(tablero)
 
         nueva_jugada(response, tablero, pers, primera_vez)
-
-        return response
     except Exception as e:
         print(e)
 
@@ -120,6 +121,13 @@ def nueva_jugada(jugada, tablero, pers, primera_vez):
             jugador = "O"
 
         tablero[int(jugada)-1] = jugador
+
+        response = verificar_ganador(tablero, jugador)
+        response_lleno = tablero_lleno(tablero)
+        if response or not response_lleno:
+            jugar = input("Juego terminado. \nContinuar? (s): ")
+            if jugar == "s":
+                comenzar_partida()
         
         if not primera_vez:
             if pers:
@@ -127,6 +135,7 @@ def nueva_jugada(jugada, tablero, pers, primera_vez):
             else: 
                 pers = True
 
+        mostrar_tablero(primera_vez, pers, tablero)
     except Exception as e:
         print(e)
 
@@ -147,6 +156,50 @@ def posicion_invalida(jugada):
         return response 
     except Exception as e:
         print(e)
+    
+def tablero_lleno(tablero):
+    """Valida que el tablero no se haya quedado sin movimientos.
+
+    Parametros: 
+    tablero(list): posicion del tablero.
+
+    Devuelve:
+    response(bool): true(tablero vacio) - false(tablero disponible)
+    """
+    for i in tablero:
+        if i == "":
+            response = False
+        else: response = True
+    return response
+
+    
+def verificar_ganador(t, j):
+    """Verifica todas las opciones que hagan ganar a un jugador
+
+    Parametros:
+    t(list): posicion del tablero
+    j(str): jugador "O"(persona) - "X"(computadora)
+
+    Devuelve:
+    response(bool): true(linea ganadora) - false(ninguna linea)
+    """
+    try:
+        if t[6] == j and t[7] == j and t[8] == j or\
+        t[3] == j and t[4] == j and t[5] == j or\
+        t[0] == j and t[1] == j and t[2] == j or\
+        t[6] == j and t[3] == j and t[0] == j or\
+        t[7] == j and t[4] == j and t[1] == j or\
+        t[8] == j and t[5] == j and t[2] == j or\
+        t[6] == j and t[4] == j and t[2] == j or\
+        t[8] == j and t[4] == j and t[0] == j:
+            print("{} ha ganado".format(j))
+            response = True
+        else:
+            response = False
+        return response
+    except Exception as e:
+        print(e)
+
 
 if __name__ == "__main__":
     comenzar_partida()
